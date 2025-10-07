@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SVSV — Simple Landing</title>
+  <meta name="description" content="SVSV — sample single-file site with HTML, CSS and JavaScript" />
+
+  <style>
+    :root{
+      --bg:#0f1724; /* deep navy */
+      --card:#0b1220;
+      --accent:#ffb703; /* warm yellow */
+      --muted:#94a3b8;
+      --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+      --maxw:1100px;
+      --g:14px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(255,183,3,0.06), transparent 6%),
+                  radial-gradient(900px 500px at 95% 90%, rgba(59,130,246,0.04), transparent 8%),
+                  var(--bg);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding:32px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .wrap{
+      width:100%;
+      max-width:var(--maxw);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent 40%);
+      border-radius:20px;
+      padding:28px;
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:22px;
+    }
+
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .logo{
+      width:56px;height:56px;
+      display:grid;place-items:center;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),#ff7b54);
+      box-shadow: 0 6px 18px rgba(255,183,3,0.12), inset 0 -6px 20px rgba(255,255,255,0.04);
+      font-weight:700;color:#071127;
+    }
+
+    h1{font-size:20px;margin:0}
+    p.lead{margin:0;color:var(--muted);font-size:13px}
+
+    nav{display:flex;gap:10px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px 12px;border-radius:10px}
+    nav a:hover{background:var(--glass);color: #fff}
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:26px;
+      align-items:start;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: var(--radius);
+      padding:20px;
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 8px 28px rgba(2,6,23,0.45);
+    }
+
+    .intro h2{margin:0 0 10px 0;font-size:28px}
+    .intro p{color:var(--muted);margin:0 0 18px 0}
+
+    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .feat{padding:12px;background:rgba(255,255,255,0.01);border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+    .feat strong{display:block}
+
+    /* Right column: preview / form */
+    .preview{
+      min-height:260px;display:flex;flex-direction:column;gap:12px;
+    }
+
+    .live-preview{
+      background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
+      border-radius:12px;padding:12px;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;border:1px solid rgba(255,255,255,0.03)
+    }
+
+    .cta-row{display:flex;gap:10px;margin-top:12px}
+    .btn{background:var(--accent);border:none;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}
+    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* small screens */
+    @media (max-width:920px){
+      .hero{grid-template-columns:1fr}
+      .brand .logo{width:48px;height:48px}
+    }
+
+    /* small niceties */
+    .tiny{font-size:12px;color:var(--muted)}
+
+    /* simple toast */
+    .toast{position:fixed;right:20px;bottom:20px;background:#071127;border:1px solid rgba(255,255,255,0.03);padding:12px 16px;border-radius:10px;box-shadow:0 8px 22px rgba(2,6,23,0.6);display:none}
+    .toast.show{display:block;animation:pop .36s ease}
+    @keyframes pop{from{transform:translateY(10px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+
+    /* tiny form */
+    .form-row{display:flex;gap:8px}
+    input[type=text],input[type=email],textarea{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+  </style>
+</head>
+<body>
+  <div class="wrap" role="main">
+    <header>
+      <div class="brand">
+        <div class="logo">SV</div>
+        <div>
+          <h1>SVSV</h1>
+          <p class="lead">Simple demo landing — HTML, CSS & JavaScript bundle</p>
+        </div>
+      </div>
+
+      <nav aria-label="main navigation">
+        <a href="#features">Features</a>
+        <a href="#preview">Preview</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="card intro">
+        <h2>Welcome to SVSV</h2>
+        <p>Clean single-file template that demonstrates a small UI, live preview, and interactive JavaScript — copy, customize and ship.</p>
+
+        <div class="features" id="features">
+          <div class="feat"><strong>Responsive</strong><span class="tiny">Works on phones, tablets and desktops.</span></div>
+          <div class="feat"><strong>Accessible</strong><span class="tiny">Keyboard-friendly and semantic HTML.</span></div>
+          <div class="feat"><strong>Interactive</strong><span class="tiny">Theme toggle + live toast + form validation.</span></div>
+          <div class="feat"><strong>One-file</strong><span class="tiny">HTML, CSS and JS together for easy editing.</span></div>
+        </div>
+
+        <div style="margin-top:18px;display:flex;gap:10px">
+          <button class="btn" id="demoAction">Try demo action</button>
+          <button class="btn secondary" id="toggleTheme">Toggle Light</button>
+        </div>
+
+      </div>
+
+      <aside class="card preview" id="preview">
+        <div class="live-preview" id="miniSite">
+          <div style="text-align:center;">
+            <h3 style="margin:0 0 6px 0">SVSV — live preview</h3>
+            <p class="tiny" style="margin:0 0 8px 0">This area updates when you press the demo button.</p>
+            <div id="previewBox" style="padding:10px;border-radius:10px;background:transparent;border:1px dashed rgba(255,255,255,0.03);min-width:220px;min-height:90px;display:flex;align-items:center;justify-content:center">Hello — press the button</div>
+          </div>
+        </div>
+
+        <form class="card" id="contact" aria-label="Contact form">
+          <div class="tiny">Get in touch</div>
+          <label for="name">Name</label>
+          <input id="name" type="text" placeholder="Your name" required />
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" required />
+          <label for="message">Message</label>
+          <textarea id="message" rows="3" placeholder="How can we help?"></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn" type="submit">Send</button>
+            <button class="btn secondary" type="button" id="clearBtn">Clear</button>
+          </div>
+        </form>
+
+      </aside>
+    </section>
+
+    <footer>
+      <div class="tiny">Made with ♥ — SVSV demo • <span id="year"></span></div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">Action completed</div>
+
+  <script>
+    // Small interactive behaviors for SVSV
+    (function(){
+      const demoBtn = document.getElementById('demoAction');
+      const previewBox = document.getElementById('previewBox');
+      const toast = document.getElementById('toast');
+      const toggle = document.getElementById('toggleTheme');
+      const yearEl = document.getElementById('year');
+      const form = document.querySelector('#contact');
+      const clear = document.getElementById('clearBtn');
+
+      yearEl.textContent = new Date().getFullYear();
+
+      function showToast(msg){
+        toast.textContent = msg || 'Done';
+        toast.classList.add('show');
+        setTimeout(()=>toast.classList.remove('show'),2200);
+      }
+
+      demoBtn.addEventListener('click', ()=>{
+        // update preview with a simple animated effect
+        previewBox.innerHTML = '';
+        const el = document.createElement('div');
+        el.textContent = '✨ SVSV demo activated';
+        el.style.fontWeight = 700;
+        previewBox.appendChild(el);
+        previewBox.animate([{transform:'translateY(6px)',opacity:0},{transform:'translateY(0)',opacity:1}],{duration:420,easing:'cubic-bezier(.2,.9,.2,1)'});
+        showToast('Demo activated');
+      });
+
+      toggle.addEventListener('click', ()=>{
+        const isLight = document.documentElement.style.getPropertyValue('--bg') === '#f7fafc';
+        if(!isLight){
+          // switch to light
+          document.documentElement.style.setProperty('--bg','#f7fafc');
+          document.documentElement.style.setProperty('--card','#ffffff');
+          document.documentElement.style.setProperty('--accent','#0ea5e9');
+          document.documentElement.style.setProperty('--muted','#475569');
+          toggle.textContent = 'Toggle Dark';
+          showToast('Light theme');
+        } else {
+          // back to dark
+          document.documentElement.style.setProperty('--bg','#0f1724');
+          document.documentElement.style.setProperty('--card','#0b1220');
+          document.documentElement.style.setProperty('--accent','#ffb703');
+          document.documentElement.style.setProperty('--muted','#94a3b8');
+          toggle.textContent = 'Toggle Light';
+          showToast('Dark theme');
+        }
+      });
+
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        if(!name || !email){
+          showToast('Please fill name & email');
+          return;
+        }
+        // fake send
+        showToast('Message sent. Thank you!');
+        form.reset();
+      });
+
+      clear.addEventListener('click', ()=>{form.reset(); showToast('Cleared');});
+
+      // keyboard shortcut: press L to trigger demo
+      window.addEventListener('keydown', (ev)=>{
+        if(ev.key.toLowerCase()==='l' && !ev.metaKey && !ev.ctrlKey){
+          demoBtn.click();
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>
